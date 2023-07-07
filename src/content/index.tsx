@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App'
 import './content.css'
+import { classNames, elements, ids } from './elements'
 
 chrome.runtime.onMessage.addListener(() => {
   init()
@@ -10,28 +11,33 @@ chrome.runtime.onMessage.addListener(() => {
 const checkIsTheaterMode = () => {
   const collection = document.getElementsByTagName('ytd-watch-flexy')
   const ytd_watch_flexy = collection.item(0)
-
   return ytd_watch_flexy?.attributes.theater
 }
 
-function init() {
-  const secondaryEl = document.getElementById('secondary')
-  const commentsEl = document.getElementById('comments')
-  const suggestionsEl = document.getElementById('secondary-inner')
-  const bellowEl = document.getElementById('below')
-  const extEl = document.getElementById('chrome-extension')
-  const theaterModeBtn = document.querySelector('[data-title-no-tooltip="Theater mode"]')
+const init = () => {
+  const {
+    secondaryEl,
+    commentsSectionEl,
+    secondaryInnerEl,
+    primaryBelowEl,
+    extEl,
+    theaterModeBtn,
+    relatedVideosEl,
+  } = elements()
+
   let isTheaterMode = checkIsTheaterMode()
 
   const setTheaterModeLayout = () => {
-    if (commentsEl && suggestionsEl) {
-      bellowEl?.append(commentsEl)
-      suggestionsEl.style.display = 'block'
+    if (commentsSectionEl && secondaryInnerEl) {
+      primaryBelowEl?.append(commentsSectionEl)
+      secondaryInnerEl.style.display = 'block'
     }
   }
 
   const setTabModeLayout = () => {
-    secondaryEl.append(commentsEl)
+    if (commentsSectionEl) {
+      secondaryInnerEl?.append(commentsSectionEl)
+    }
   }
 
   console.log({ isTheaterMode })
@@ -51,16 +57,17 @@ function init() {
     })
   }
 
-  if (secondaryEl && commentsEl && !extEl) {
+  if (secondaryEl && commentsSectionEl && !extEl) {
     const wrapper = document.createElement('div')
-    wrapper.classList.add('secondary-wrapper')
+    wrapper.classList.add(classNames.secondaryWrapper)
     secondaryEl.parentNode?.insertBefore(wrapper, secondaryEl)
     wrapper.appendChild(secondaryEl)
-    const root = document.createElement('div')
-    root.id = 'chrome-extension'
-    ReactDOM.createRoot(root as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
-    if (secondaryEl && commentsEl) {
-      secondaryEl.prepend(root)
+
+    const tabEl = document.createElement('div')
+    tabEl.id = ids.extEl
+    ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
+    if (secondaryEl && commentsSectionEl) {
+      secondaryEl.prepend(tabEl)
       setTabModeLayout()
     }
   }

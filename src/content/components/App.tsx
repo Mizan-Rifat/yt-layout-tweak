@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react'
+import { elements } from '../elements'
 
-const App = ({ isTheaterMode }) => {
-  const suggestionsEl = document.getElementById('secondary-inner')
-  const commentsEl = document.getElementById('comments')
+const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
+  const { commentsSectionEl, relatedVideosEl } = elements()
 
-  console.log({ isTheaterMode })
-  const handleClick = (id) => {
-    if (id === 'comments') {
-      commentsEl.style.display = 'block'
-      suggestionsEl.style.display = 'none'
-    } else {
-      commentsEl.style.display = 'none'
-      suggestionsEl.style.display = 'block'
+  const handleClick = (id: string) => {
+    if (commentsSectionEl && relatedVideosEl) {
+      if (id === 'comments') {
+        commentsSectionEl.style.display = 'block'
+        relatedVideosEl.style.display = 'none'
+      } else {
+        commentsSectionEl.style.display = 'none'
+        relatedVideosEl.style.display = 'block'
+      }
     }
   }
 
   useEffect(() => {
-    if (!isTheaterMode && suggestionsEl) {
-      suggestionsEl.style.display = 'none'
+    if (!isTheaterMode && relatedVideosEl) {
+      relatedVideosEl.style.display = 'none'
     }
   }, [])
 

@@ -1,34 +1,43 @@
-export const selectors = {
+type Selectors = {
+  primaryEl: string
+  secondaryEl: string
+  secondaryInnerEl: string
+  relatedVideosEl: string
+  primaryBelowEl: string
+  commentsSectionEl: string
+  extEl: string
+  theaterModeBtn: string
+}
+
+type Elements = {
+  [K in keyof Selectors]: HTMLElement | null
+}
+
+export const selectors: Selectors = {
   primaryEl: '#primary',
   secondaryEl: '#secondary',
-  secondaryInnerEl: '#secondary',
+  secondaryInnerEl: '#secondary-inner',
   relatedVideosEl: '#related',
+  primaryBelowEl: '#below',
   commentsSectionEl: '#comments',
   extEl: '#youtube-comments-ext',
+  theaterModeBtn: "[data-title-no-tooltip='Theater mode']",
 }
-export const initElements = () => {
-  const classNames = {
-    secondaryWrapper: 'secondary-wrapper',
-  }
 
-  const ids = {
-    extEl: 'youtube-comments-ext',
-  }
-
-  const secondaryEl = document.querySelector(selectors.secondaryEl)
-  const secondaryInnerEl = document.querySelector(selectors.secondaryInnerEl)
-  const commentsSectionEl = document.getElementById(selectors.commentsSectionEl)
-  const relatedVideosEl = document.getElementById(selectors.relatedVideosEl)
-  const extEl = document.getElementById(selectors.extEl)
-
-  return {
-    selectors,
-    classNames,
-    ids,
-    secondaryEl,
-    secondaryInnerEl,
-    commentsSectionEl,
-    relatedVideosEl,
-    extEl,
-  }
+export const classNames = {
+  secondaryWrapper: 'secondary-wrapper',
 }
+
+export const ids = {
+  extEl: 'youtube-comments-ext',
+}
+
+export const getElement: (selector: string) => HTMLElement | null = (selector) =>
+  document.querySelector(selector)
+
+export const elements: () => Elements = () =>
+  Object.keys(selectors).reduce((acc, selector) => {
+    const key = selector as keyof Selectors
+    acc[key] = getElement(selectors[key])
+    return acc
+  }, {} as Elements)
