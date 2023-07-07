@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { elements } from '../elements'
+import { getStorageValue } from '../../utils'
 
 const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   const { commentsSectionEl, relatedVideosEl } = elements()
@@ -17,9 +18,14 @@ const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   }
 
   useEffect(() => {
-    if (!isTheaterMode && relatedVideosEl) {
-      relatedVideosEl.style.display = 'none'
-    }
+    ;(async () => {
+      const layout = await getStorageValue('layout')
+      console.log({ layout })
+
+      if (!isTheaterMode && relatedVideosEl && layout === 'tab') {
+        relatedVideosEl.style.display = 'none'
+      }
+    })()
   }, [])
 
   return (

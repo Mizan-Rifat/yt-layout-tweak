@@ -6,6 +6,7 @@ type Selectors = {
   primaryBelowEl: string
   commentsSectionEl: string
   extEl: string
+  secondaryWrapper: string
   theaterModeBtn: string
 }
 
@@ -21,6 +22,7 @@ export const selectors: Selectors = {
   primaryBelowEl: '#below',
   commentsSectionEl: '#comments',
   extEl: '#youtube-comments-ext',
+  secondaryWrapper: '.secondary-wrapper',
   theaterModeBtn: "[data-title-no-tooltip='Theater mode']",
 }
 
