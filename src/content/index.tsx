@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App'
 import './content.css'
-import { classNames, elements, ids } from './elements'
+import { classNames, elements, ids, selectors } from './elements'
 
 chrome.runtime.onMessage.addListener(() => {
   init()
@@ -25,48 +25,60 @@ const init = () => {
     relatedVideosEl,
   } = elements()
 
-  let isTheaterMode = checkIsTheaterMode()
+  if (
+    secondaryEl &&
+    commentsSectionEl &&
+    secondaryInnerEl &&
+    primaryBelowEl &&
+    theaterModeBtn &&
+    relatedVideosEl
+  ) {
+    let isTheaterMode = checkIsTheaterMode()
 
-  const setTheaterModeLayout = () => {
-    if (commentsSectionEl && secondaryInnerEl) {
-      primaryBelowEl?.append(commentsSectionEl)
-      secondaryInnerEl.style.display = 'block'
-    }
-  }
-
-  const setTabModeLayout = () => {
-    if (commentsSectionEl) {
-      secondaryInnerEl?.append(commentsSectionEl)
-    }
-  }
-
-  console.log({ isTheaterMode })
-
-  if (isTheaterMode) {
-    setTheaterModeLayout()
-  }
-
-  if (theaterModeBtn) {
-    theaterModeBtn.addEventListener('click', () => {
-      isTheaterMode = !checkIsTheaterMode()
-      if (isTheaterMode) {
-        setTheaterModeLayout()
-      } else {
-        setTabModeLayout()
+    const setDefaultLayout = () => {
+      if (!primaryBelowEl.querySelector(selectors.commentsSectionEl)) {
+        primaryBelowEl.append(commentsSectionEl)
+        relatedVideosEl.style.display = 'block'
       }
-    })
-  }
+      if (extEl) {
+        extEl.style.display = 'none'
+      }
+    }
 
-  if (secondaryEl && commentsSectionEl && !extEl) {
-    const wrapper = document.createElement('div')
-    wrapper.classList.add(classNames.secondaryWrapper)
-    secondaryEl.parentNode?.insertBefore(wrapper, secondaryEl)
-    wrapper.appendChild(secondaryEl)
+    const setTabModeLayout = () => {
+      secondaryInnerEl?.append(commentsSectionEl)
+      if (extEl) {
+        extEl.style.display = 'block'
+      }
+    }
 
-    const tabEl = document.createElement('div')
-    tabEl.id = ids.extEl
-    ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
-    if (secondaryEl && commentsSectionEl) {
+    console.log({ isTheaterMode })
+
+    if (isTheaterMode) {
+      setDefaultLayout()
+    }
+
+    if (theaterModeBtn) {
+      theaterModeBtn.addEventListener('click', () => {
+        isTheaterMode = !checkIsTheaterMode()
+        if (isTheaterMode) {
+          setDefaultLayout()
+        } else {
+          setTabModeLayout()
+        }
+      })
+    }
+
+    if (!extEl) {
+      const wrapper = document.createElement('div')
+      wrapper.classList.add(classNames.secondaryWrapper)
+      secondaryEl.parentNode?.insertBefore(wrapper, secondaryEl)
+      wrapper.appendChild(secondaryEl)
+
+      const tabEl = document.createElement('div')
+      tabEl.id = ids.extEl
+      ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
+
       secondaryEl.prepend(tabEl)
       setTabModeLayout()
     }

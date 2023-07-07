@@ -8,4 +8,5 @@ ytd-watch-flexy:not([theater]):not([fullscreen]):not([no-top-margin]):not([reduc
   overflow-y: scroll;
   flex-basis: 0px;
   flex-grow: 1;
+  min-height: calc(100vh - 80px);
 }
