@@ -1,4 +1,11 @@
-#comments {
-  max-height: 100vh !important;
-  overflow: scroll;
+.secondary-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+ytd-watch-flexy:not([theater]):not([fullscreen]):not([no-top-margin]):not([reduced-top-margin])
+  #secondary.ytd-watch-flexy {
+  overflow-y: scroll;
+  flex-basis: 0px;
+  flex-grow: 1;
 }
