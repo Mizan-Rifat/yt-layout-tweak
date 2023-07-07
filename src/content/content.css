@@ -11,3 +11,7 @@
   flex-grow: 1;
   min-height: calc(100vh - 80px);
 }
+
+ytd-masthead #container #center button.active {
+  background: #eee;
+}

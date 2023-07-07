@@ -4,11 +4,11 @@ import App from './components/App'
 import './content.css'
 import { classNames, elements, ids, selectors } from './elements'
 import { getStorageValue, setStorageValue } from '../utils'
+import { LayoutTabItems } from './components/LayoutTabItems'
 
 let initialized = false
 
 chrome.runtime.onMessage.addListener(() => {
-  setStorageValue({ layout: 'default' })
   init()
 })
 
@@ -19,13 +19,17 @@ const checkIsTheaterMode = () => {
 }
 
 const setDefaultLayout = () => {
-  const { commentsSectionEl, primaryBelowEl, extEl, relatedVideosEl } = elements()
+  const { commentsSectionEl, primaryBelowEl, secondaryInnerEl, extEl, relatedVideosEl } = elements()
 
-  if (!primaryBelowEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
-    primaryBelowEl?.append(commentsSectionEl)
-    if (relatedVideosEl) {
-      relatedVideosEl.style.display = 'block'
+  if (commentsSectionEl && relatedVideosEl) {
+    if (!primaryBelowEl?.querySelector(selectors.commentsSectionEl)) {
+      primaryBelowEl?.append(commentsSectionEl)
     }
+    if (!secondaryInnerEl?.querySelector(selectors.relatedVideosEl)) {
+      secondaryInnerEl?.append(relatedVideosEl)
+    }
+    commentsSectionEl.style.display = 'block'
+    relatedVideosEl.style.display = 'block'
   }
   if (extEl) {
     extEl.style.display = 'none'
@@ -49,9 +53,13 @@ const setAlterLayout = () => {
 }
 
 const setTabModeLayout = () => {
-  const { commentsSectionEl, secondaryInnerEl, extEl } = elements()
-  if (commentsSectionEl) {
+  const { commentsSectionEl, secondaryInnerEl, extEl, relatedVideosEl } = elements()
+  if (!secondaryInnerEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
     secondaryInnerEl?.append(commentsSectionEl)
+  }
+  if (!secondaryInnerEl?.querySelector(selectors.relatedVideosEl) && relatedVideosEl) {
+    secondaryInnerEl?.append(relatedVideosEl)
+    relatedVideosEl.style.display = 'none'
   }
   if (extEl) {
     extEl.style.display = 'block'
@@ -76,31 +84,13 @@ const setLayout = async () => {
 }
 
 const init = async () => {
-  const { secondaryEl, theaterModeBtn } = elements()
-
-  const layout = await getStorageValue('layout')
-
-  console.log({ layout })
+  const { secondaryEl, theaterModeBtn, navCenterEl } = elements()
 
   let isTheaterMode = checkIsTheaterMode()
 
-  console.log({ isTheaterMode })
-
-  // if (isTheaterMode) {
-  //   setDefaultLayout()
-  // }
-
   if (theaterModeBtn) {
     theaterModeBtn.addEventListener('click', () => {
-      isTheaterMode = !checkIsTheaterMode()
-
-      if (layout === 'tab') {
-        if (isTheaterMode) {
-          setDefaultLayout()
-        } else {
-          setLayout()
-        }
-      }
+      setLayout()
     })
   }
 
@@ -117,6 +107,12 @@ const init = async () => {
       tabEl.id = ids.extEl
       ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
       secondaryEl.prepend(tabEl)
+
+      const layoutTabEl = document.createElement('div')
+      ReactDOM.createRoot(layoutTabEl as HTMLElement).render(
+        <LayoutTabItems setLayout={setLayout} />,
+      )
+      navCenterEl?.prepend(layoutTabEl)
     }
 
     setLayout()

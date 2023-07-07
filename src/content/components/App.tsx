@@ -18,9 +18,10 @@ const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   }
 
   useEffect(() => {
+    console.log('app')
+
     ;(async () => {
       const layout = await getStorageValue('layout')
-      console.log({ layout })
 
       if (!isTheaterMode && relatedVideosEl && layout === 'tab') {
         relatedVideosEl.style.display = 'none'

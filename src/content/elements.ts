@@ -8,6 +8,7 @@ type Selectors = {
   extEl: string
   secondaryWrapper: string
   theaterModeBtn: string
+  navCenterEl: string
 }
 
 type Elements = {
@@ -24,6 +25,7 @@ export const selectors: Selectors = {
   extEl: '#youtube-comments-ext',
   secondaryWrapper: '.secondary-wrapper',
   theaterModeBtn: "[data-title-no-tooltip='Theater mode']",
+  navCenterEl: 'ytd-masthead #container #center',
 }
 
 export const classNames = {
