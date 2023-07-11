@@ -4,20 +4,20 @@ import { getStorageValue, setStorageValue } from '../../utils'
 
 const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   const [activeItem, setActiveItem] = useState('comments')
-  const { commentsSectionEl, relatedVideosEl } = elements()
+  const { commentsSectionEl, secondaryInnerEl } = elements()
 
   console.log({ isTheaterMode })
 
   const handleClick = (id: string) => {
     setActiveItem(id)
     setStorageValue({ activeTab: id })
-    if (commentsSectionEl && relatedVideosEl) {
+    if (commentsSectionEl && secondaryInnerEl) {
       if (id === 'comments') {
         commentsSectionEl.style.display = 'block'
-        relatedVideosEl.style.display = 'none'
+        secondaryInnerEl.style.display = 'none'
       } else {
         commentsSectionEl.style.display = 'none'
-        relatedVideosEl.style.display = 'block'
+        secondaryInnerEl.style.display = 'block'
       }
     }
   }
@@ -27,8 +27,8 @@ const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
       const activeTab = await getStorageValue('activeTab')
       setActiveItem(activeTab)
       const layout = await getStorageValue('layout')
-      if (!isTheaterMode && relatedVideosEl && layout === 'tab' && activeTab === 'comments') {
-        relatedVideosEl.style.display = 'none'
+      if (!isTheaterMode && secondaryInnerEl && layout === 'tab' && activeTab === 'comments') {
+        secondaryInnerEl.style.display = 'none'
       }
     })()
   }, [])

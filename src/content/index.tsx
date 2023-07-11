@@ -19,18 +19,18 @@ const checkIsTheaterMode = () => {
 }
 
 const setDefaultLayout = () => {
-  const { commentsSectionEl, primaryBelowEl, secondaryInnerEl, contentTabEl, relatedVideosEl } =
+  const { commentsSectionEl, primaryBelowEl, secondaryInnerEl, contentTabEl, secondaryEl } =
     elements()
 
-  if (commentsSectionEl && relatedVideosEl) {
+  if (commentsSectionEl && secondaryInnerEl) {
     if (!primaryBelowEl?.querySelector(selectors.commentsSectionEl)) {
       primaryBelowEl?.append(commentsSectionEl)
     }
-    if (!secondaryInnerEl?.querySelector(selectors.relatedVideosEl)) {
-      secondaryInnerEl?.append(relatedVideosEl)
+    if (!secondaryEl?.querySelector(selectors.secondaryInnerEl)) {
+      secondaryEl?.append(secondaryInnerEl)
     }
     commentsSectionEl.style.display = 'block'
-    relatedVideosEl.style.display = 'block'
+    secondaryInnerEl.style.display = 'block'
   }
   if (contentTabEl) {
     contentTabEl.style.display = 'none'
@@ -38,14 +38,14 @@ const setDefaultLayout = () => {
 }
 
 const setAlterLayout = () => {
-  const { commentsSectionEl, secondaryInnerEl, primaryBelowEl, contentTabEl, relatedVideosEl } =
+  const { commentsSectionEl, secondaryInnerEl, primaryBelowEl, contentTabEl, secondaryEl } =
     elements()
 
-  if (commentsSectionEl && relatedVideosEl) {
-    secondaryInnerEl?.append(commentsSectionEl)
-    primaryBelowEl?.append(relatedVideosEl)
+  if (commentsSectionEl && secondaryInnerEl) {
+    secondaryEl?.append(commentsSectionEl)
+    primaryBelowEl?.append(secondaryInnerEl)
 
-    relatedVideosEl.style.display = 'block'
+    secondaryInnerEl.style.display = 'block'
     commentsSectionEl.style.display = 'block'
   }
 
@@ -56,21 +56,21 @@ const setAlterLayout = () => {
 
 const setTabModeLayout = async () => {
   const activeTab = await getStorageValue('activeTab')
-  const { commentsSectionEl, secondaryInnerEl, contentTabEl, relatedVideosEl } = elements()
+  const { secondaryEl, commentsSectionEl, secondaryInnerEl, contentTabEl } = elements()
 
-  if (!secondaryInnerEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
-    secondaryInnerEl?.append(commentsSectionEl)
+  if (!secondaryEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
+    secondaryEl?.append(commentsSectionEl)
   }
-  if (!secondaryInnerEl?.querySelector(selectors.relatedVideosEl) && relatedVideosEl) {
-    secondaryInnerEl?.append(relatedVideosEl)
+  if (!secondaryEl?.querySelector(selectors.secondaryInnerEl) && secondaryInnerEl) {
+    secondaryEl?.append(secondaryInnerEl)
   }
 
   if (activeTab === 'comments') {
     commentsSectionEl!.style.display = 'block'
-    relatedVideosEl!.style.display = 'none'
+    secondaryInnerEl!.style.display = 'none'
   } else {
     commentsSectionEl!.style.display = 'none'
-    relatedVideosEl!.style.display = 'block'
+    secondaryInnerEl!.style.display = 'block'
   }
   if (contentTabEl) {
     contentTabEl.style.display = 'block'
