@@ -5,7 +5,7 @@ type Selectors = {
   relatedVideosEl: string
   primaryBelowEl: string
   commentsSectionEl: string
-  extEl: string
+  contentTabEl: string
   secondaryWrapper: string
   theaterModeBtn: string
   navCenterEl: string
@@ -22,7 +22,7 @@ export const selectors: Selectors = {
   relatedVideosEl: '#related',
   primaryBelowEl: '#below',
   commentsSectionEl: '#comments',
-  extEl: '#youtube-comments-ext',
+  contentTabEl: '#ylt-content-tab',
   secondaryWrapper: '.secondary-wrapper',
   theaterModeBtn: "[data-title-no-tooltip='Theater mode']",
   navCenterEl: 'ytd-masthead #container #center',
@@ -30,10 +30,13 @@ export const selectors: Selectors = {
 
 export const classNames = {
   secondaryWrapper: 'secondary-wrapper',
+  layoutTab: 'ylt-layout-tab',
+  contentTab: 'ylt-content-tab',
+  extClass: 'yt-layout-tweak',
 }
 
 export const ids = {
-  extEl: 'youtube-comments-ext',
+  contentTabEl: 'ylt-content-tab',
 }
 
 export const getElement: (selector: string) => HTMLElement | null = (selector) =>

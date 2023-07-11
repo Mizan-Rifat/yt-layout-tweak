@@ -1,0 +1,83 @@
+.secondary-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollbar {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    visibility: hidden;
+    -webkit-appearance: none;
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    visibility: hidden;
+    border-radius: 3px;
+    background-color: #e8e8e8;
+  }
+
+  &:hover,
+  &:focus {
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-thumb {
+      visibility: visible !important;
+    }
+  }
+}
+
+.tab-layout
+  ytd-watch-flexy:not([theater]):not([fullscreen]):not([no-top-margin]):not([reduced-top-margin])
+  #secondary.ytd-watch-flexy {
+  overflow-y: scroll;
+  flex-basis: 0px;
+  flex-grow: 1;
+  min-height: calc(100vh - 80px);
+  margin-right: 4px;
+  @extend .scrollbar;
+}
+
+.yt-layout-tweak {
+  --ylt-btn-bg-color: #f1f1f1;
+  --ylt-btn-active-bg-color: #0d0d0d;
+  --ylt-btn-hover-bg-color: #e8e8e8;
+  --ylt-btn-text-color: #000;
+  --ylt-btn-active-text-color: #fff;
+  button {
+    background: var(--ylt-btn-bg-color);
+    border-radius: 6px;
+    color: var(--ylt-btn-text-color);
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background: var(--ylt-btn-hover-bg-color);
+    }
+    &.active {
+      background: var(--ylt-btn-active-bg-color);
+      color: var(--ylt-btn-active-text-color);
+    }
+  }
+  .ylt-layout-tab {
+    display: flex;
+    gap: 8px;
+    button {
+      height: 30px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .ylt-content-tab {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    button {
+      padding: 8px 12px;
+    }
+  }
+}

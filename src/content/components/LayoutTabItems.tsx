@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getStorageValue, setStorageValue } from '../../utils'
+import { Alter, Default, Tab } from './Icons'
 
 export const LayoutTabItems = ({ setLayout }: { setLayout: () => void }) => {
   const [currentLayout, setCurrentLayout] = useState('')
@@ -17,24 +18,24 @@ export const LayoutTabItems = ({ setLayout }: { setLayout: () => void }) => {
   }, [])
 
   return (
-    <div style={{ display: 'flex', gap: '8px' }}>
+    <div className="ylt-layout-tab">
       <button
         className={currentLayout === 'default' ? 'active' : undefined}
         onClick={() => handleClick('default')}
       >
-        default
+        <Default />
       </button>
       <button
         className={currentLayout === 'tab' ? 'active' : undefined}
         onClick={() => handleClick('tab')}
       >
-        tab
+        <Tab />
       </button>
       <button
         className={currentLayout === 'alter' ? 'active' : undefined}
         onClick={() => handleClick('alter')}
       >
-        alter
+        <Alter />
       </button>
     </div>
   )

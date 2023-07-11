@@ -1,6 +1,6 @@
 {
-  "name": "my-crx",
-  "version": "0.0.0",
+  "name": "yt-layout-tweak",
+  "version": "1.0.0",
   "author": "Mizan-Rifat",
   "description": "",
   "type": "module",
@@ -32,6 +32,7 @@
     "@vitejs/plugin-react": "^1.3.2",
     "glob": "^9.2.1",
     "prettier": "^2.7.1",
+    "sass": "^1.63.6",
     "typescript": "^4.6.4",
     "vite": "^2.9.13",
     "vite-plugin-zip-pack": "^1.0.5"

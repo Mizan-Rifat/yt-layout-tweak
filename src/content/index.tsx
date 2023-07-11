@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App'
-import './content.css'
+import './content.scss'
 import { classNames, elements, ids, selectors } from './elements'
-import { getStorageValue, setStorageValue } from '../utils'
+import { getStorageValue } from '../utils'
 import { LayoutTabItems } from './components/LayoutTabItems'
 
 let initialized = false
@@ -19,7 +19,8 @@ const checkIsTheaterMode = () => {
 }
 
 const setDefaultLayout = () => {
-  const { commentsSectionEl, primaryBelowEl, secondaryInnerEl, extEl, relatedVideosEl } = elements()
+  const { commentsSectionEl, primaryBelowEl, secondaryInnerEl, contentTabEl, relatedVideosEl } =
+    elements()
 
   if (commentsSectionEl && relatedVideosEl) {
     if (!primaryBelowEl?.querySelector(selectors.commentsSectionEl)) {
@@ -31,13 +32,14 @@ const setDefaultLayout = () => {
     commentsSectionEl.style.display = 'block'
     relatedVideosEl.style.display = 'block'
   }
-  if (extEl) {
-    extEl.style.display = 'none'
+  if (contentTabEl) {
+    contentTabEl.style.display = 'none'
   }
 }
 
 const setAlterLayout = () => {
-  const { commentsSectionEl, secondaryInnerEl, primaryBelowEl, extEl, relatedVideosEl } = elements()
+  const { commentsSectionEl, secondaryInnerEl, primaryBelowEl, contentTabEl, relatedVideosEl } =
+    elements()
 
   if (commentsSectionEl && relatedVideosEl) {
     secondaryInnerEl?.append(commentsSectionEl)
@@ -47,22 +49,31 @@ const setAlterLayout = () => {
     commentsSectionEl.style.display = 'block'
   }
 
-  if (extEl) {
-    extEl.style.display = 'none'
+  if (contentTabEl) {
+    contentTabEl.style.display = 'none'
   }
 }
 
-const setTabModeLayout = () => {
-  const { commentsSectionEl, secondaryInnerEl, extEl, relatedVideosEl } = elements()
+const setTabModeLayout = async () => {
+  const activeTab = await getStorageValue('activeTab')
+  const { commentsSectionEl, secondaryInnerEl, contentTabEl, relatedVideosEl } = elements()
+
   if (!secondaryInnerEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
     secondaryInnerEl?.append(commentsSectionEl)
   }
   if (!secondaryInnerEl?.querySelector(selectors.relatedVideosEl) && relatedVideosEl) {
     secondaryInnerEl?.append(relatedVideosEl)
-    relatedVideosEl.style.display = 'none'
   }
-  if (extEl) {
-    extEl.style.display = 'block'
+
+  if (activeTab === 'comments') {
+    commentsSectionEl!.style.display = 'block'
+    relatedVideosEl!.style.display = 'none'
+  } else {
+    commentsSectionEl!.style.display = 'none'
+    relatedVideosEl!.style.display = 'block'
+  }
+  if (contentTabEl) {
+    contentTabEl.style.display = 'block'
   }
 }
 
@@ -104,11 +115,13 @@ const init = async () => {
 
       //add tab component to dom
       const tabEl = document.createElement('div')
-      tabEl.id = ids.extEl
+      tabEl.id = ids.contentTabEl
+      tabEl.classList.add(classNames.extClass)
       ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
       secondaryEl.prepend(tabEl)
 
       const layoutTabEl = document.createElement('div')
+      layoutTabEl.classList.add(classNames.extClass)
       ReactDOM.createRoot(layoutTabEl as HTMLElement).render(
         <LayoutTabItems setLayout={setLayout} />,
       )
