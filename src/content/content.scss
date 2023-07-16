@@ -16,7 +16,7 @@
   &::-webkit-scrollbar-thumb {
     visibility: hidden;
     border-radius: 3px;
-    background-color: #e8e8e8;
+    background-color: #606060;
   }
 
   &:hover,
@@ -28,15 +28,20 @@
   }
 }
 
-.tab-layout
+.tabbed-layout
   ytd-watch-flexy:not([theater]):not([fullscreen]):not([no-top-margin]):not([reduced-top-margin])
   #secondary.ytd-watch-flexy {
-  overflow-y: scroll;
+  // overflow-y: scroll;
   flex-basis: 0px;
   flex-grow: 1;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 143px);
   margin-right: 4px;
-  @extend .scrollbar;
+  #comments,
+  #secondary-inner {
+    height: 100%;
+    overflow-y: scroll;
+    @extend .scrollbar;
+  }
 }
 
 .yt-layout-tweak {
@@ -45,6 +50,13 @@
   --ylt-btn-hover-bg-color: #e8e8e8;
   --ylt-btn-text-color: #000;
   --ylt-btn-active-text-color: #fff;
+  [dark] & {
+    --ylt-btn-bg-color: #232323;
+    --ylt-btn-active-bg-color: #eeeeee;
+    --ylt-btn-hover-bg-color: #1f1f1f;
+    --ylt-btn-text-color: #ededed;
+    --ylt-btn-active-text-color: #1e1e1e;
+  }
   button {
     background: var(--ylt-btn-bg-color);
     border-radius: 6px;
@@ -64,6 +76,7 @@
   .ylt-layout-tab {
     display: flex;
     gap: 8px;
+    margin-left: 16px;
     button {
       height: 30px;
       width: 40px;
@@ -78,6 +91,20 @@
     margin-bottom: 16px;
     button {
       padding: 8px 12px;
+    }
+  }
+}
+ytd-masthead {
+  &:not([is-watch-page]) {
+    .ylt-layout-tab {
+      display: none !important;
+    }
+  }
+  &[theater] {
+    .ylt-layout-tab {
+      [title='Tabbed Layout'] {
+        display: none;
+      }
     }
   }
 }

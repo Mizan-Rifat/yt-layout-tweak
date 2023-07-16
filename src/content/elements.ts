@@ -16,14 +16,14 @@ type Elements = {
 }
 
 export const selectors: Selectors = {
-  primaryEl: '#primary',
-  secondaryEl: '#secondary',
-  secondaryInnerEl: '#secondary-inner',
-  relatedVideosEl: '#related',
-  primaryBelowEl: '#below',
-  commentsSectionEl: '#comments',
-  contentTabEl: '#ylt-content-tab',
-  secondaryWrapper: '.secondary-wrapper',
+  primaryEl: 'ytd-watch-flexy #primary',
+  secondaryEl: 'ytd-watch-flexy #secondary',
+  secondaryInnerEl: 'ytd-watch-flexy #secondary-inner',
+  relatedVideosEl: 'ytd-watch-flexy #related',
+  primaryBelowEl: 'ytd-watch-flexy #below',
+  commentsSectionEl: 'ytd-watch-flexy #comments',
+  contentTabEl: 'ytd-watch-flexy #ylt-content-tab',
+  secondaryWrapper: 'ytd-watch-flexy .secondary-wrapper',
   theaterModeBtn: "[data-title-no-tooltip='Theater mode']",
   navCenterEl: 'ytd-masthead #container #center',
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Alter = ({ className }: { className?: string }) => {
+export const Swap = ({ className }: { className?: string }) => {
   return (
     <svg
       width="26"
@@ -10,7 +10,7 @@ export const Alter = ({ className }: { className?: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <g clip-path="url(#clip0_10_80)">
+      <g clipPath="url(#clip0_10_80)">
         <path
           d="M13.1325 2.9082C12.9853 2.3539 12.5516 1.91735 12.0009 1.7692C11.0027 1.5 6.99998 1.5 6.99998 1.5C6.99998 1.5 2.99733 1.5 1.9991 1.7692C1.44839 1.91737 1.01466 2.3539 0.867444 2.9082C0.599976 3.91289 0.599976 6.00909 0.599976 6.00909C0.599976 6.00909 0.599976 8.1053 0.867444 9.10999C1.01466 9.66429 1.44839 10.0826 1.9991 10.2308C2.99733 10.5 6.99998 10.5 6.99998 10.5C6.99998 10.5 11.0026 10.5 12.0009 10.2308C12.5516 10.0826 12.9853 9.66429 13.1325 9.10999C13.4 8.1053 13.4 6.00909 13.4 6.00909C13.4 6.00909 13.4 3.91289 13.1325 2.9082ZM5.69088 7.91229V4.1059L9.03633 6.00914L5.69088 7.91229Z"
           fill="currentColor"
@@ -31,7 +31,7 @@ export const Alter = ({ className }: { className?: string }) => {
   )
 }
 
-export const Tab = ({ className }: { className?: string }) => {
+export const Tabbed = ({ className }: { className?: string }) => {
   return (
     <svg
       width="28"

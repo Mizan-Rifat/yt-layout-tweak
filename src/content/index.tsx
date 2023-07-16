@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './components/App'
+import ContentTab from './components/ContentTab'
 import './content.scss'
 import { classNames, elements, ids, selectors } from './elements'
 import { getStorageValue } from '../utils'
@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(() => {
 const checkIsTheaterMode = () => {
   const collection = document.getElementsByTagName('ytd-watch-flexy')
   const ytd_watch_flexy = collection.item(0)
+  // @ts-ignore
   return ytd_watch_flexy?.attributes.theater
 }
 
@@ -37,7 +38,7 @@ const setDefaultLayout = () => {
   }
 }
 
-const setAlterLayout = () => {
+const setSwapLayout = () => {
   const { commentsSectionEl, secondaryInnerEl, primaryBelowEl, contentTabEl, secondaryEl } =
     elements()
 
@@ -54,14 +55,18 @@ const setAlterLayout = () => {
   }
 }
 
-const setTabModeLayout = async () => {
+const setTabbedLayout = async () => {
   const activeTab = await getStorageValue('activeTab')
   const { secondaryEl, commentsSectionEl, secondaryInnerEl, contentTabEl } = elements()
 
   if (!secondaryEl?.querySelector(selectors.commentsSectionEl) && commentsSectionEl) {
+    console.log('1')
+
     secondaryEl?.append(commentsSectionEl)
   }
   if (!secondaryEl?.querySelector(selectors.secondaryInnerEl) && secondaryInnerEl) {
+    console.log('2')
+
     secondaryEl?.append(secondaryInnerEl)
   }
 
@@ -80,15 +85,15 @@ const setTabModeLayout = async () => {
 const setLayout = async () => {
   const layout = await getStorageValue('layout')
   const isTheaterMode = checkIsTheaterMode()
-  document.body.classList.remove('tab-layout')
+  document.body.classList.remove('tabbed-layout')
 
-  if (isTheaterMode && layout === 'tab') {
+  if (isTheaterMode && layout === 'tabbed') {
     setDefaultLayout()
-  } else if (layout === 'tab') {
-    document.body.classList.add('tab-layout')
-    setTabModeLayout()
-  } else if (layout === 'alter') {
-    setAlterLayout()
+  } else if (layout === 'tabbed') {
+    document.body.classList.add('tabbed-layout')
+    setTabbedLayout()
+  } else if (layout === 'swap') {
+    setSwapLayout()
   } else {
     setDefaultLayout()
   }
@@ -117,7 +122,7 @@ const init = async () => {
       const tabEl = document.createElement('div')
       tabEl.id = ids.contentTabEl
       tabEl.classList.add(classNames.extClass)
-      ReactDOM.createRoot(tabEl as HTMLElement).render(<App isTheaterMode={isTheaterMode} />)
+      ReactDOM.createRoot(tabEl as HTMLElement).render(<ContentTab isTheaterMode={isTheaterMode} />)
       secondaryEl.prepend(tabEl)
 
       const layoutTabEl = document.createElement('div')

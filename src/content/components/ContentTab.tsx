@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { elements } from '../elements'
 import { getStorageValue, setStorageValue } from '../../utils'
 
-const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
+const ContentTab = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   const [activeItem, setActiveItem] = useState('comments')
   const { commentsSectionEl, secondaryInnerEl } = elements()
 
@@ -27,7 +27,7 @@ const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
       const activeTab = await getStorageValue('activeTab')
       setActiveItem(activeTab)
       const layout = await getStorageValue('layout')
-      if (!isTheaterMode && secondaryInnerEl && layout === 'tab' && activeTab === 'comments') {
+      if (!isTheaterMode && secondaryInnerEl && layout === 'tabbed' && activeTab === 'comments') {
         secondaryInnerEl.style.display = 'none'
       }
     })()
@@ -51,4 +51,4 @@ const App = ({ isTheaterMode }: { isTheaterMode: boolean }) => {
   )
 }
 
-export default App
+export default ContentTab
